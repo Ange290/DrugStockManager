@@ -1,2 +1,2 @@
-# Student-Attendance-System
-Student Attendance System
+# Farmer Management App
+Farmer Management App
