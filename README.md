@@ -1,2 +1,2 @@
-# Student-Attendence-System
-Student Attendence System
+# Student-Attendance-System
+Student Attendance System
