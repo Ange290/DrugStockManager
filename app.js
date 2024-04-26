@@ -3,11 +3,11 @@ dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
 import configure from './src/configs/index.js';
-import all_routes from './src/routes/medicine.route.js'
+import all_routes from './src/routes/allroute.js';
 
 const app = express();
 app.use(express.json());
-app.use('/api/medicine',all_routes);
+app.use('/api/',all_routes);
 
 mongoose.connect(configure.MONGODB_CONNECTION)
 .then(()=>{

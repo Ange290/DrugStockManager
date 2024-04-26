@@ -1,4 +1,4 @@
-import {model, Schema} from('mongoose');
+import {model, Schema} from 'mongoose';
 
 const supplierSchema = new Schema({
  name: {
@@ -15,4 +15,5 @@ const supplierSchema = new Schema({
  }
 });
 
-module.exports = model('Supplier', supplierSchema);
+const supplier_model= model('Supplier', supplierSchema);
+export default supplier_model;
