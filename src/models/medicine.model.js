@@ -1,26 +1,31 @@
-import {get, model, Schema} from 'mongoose';
+import { model, Schema} from 'mongoose';
 
 const medicineSchema = new Schema({
     name: { 
         type: String, 
         required: true
-     },
+       },
     batchNo: {
          type: String,
           required: true 
         },
+    manufactDate:{
+           type: String,
+            required: true
+        },
     expiredDate: { 
-        type:String, 
-        required: true
- },
+            type:String, 
+            required: true
+        },
     quantityInStock: { 
-        type: Number, 
-        required: true },
-        measure:{
+            type: Number, 
+            required: true 
+        },
+    measure:{
             type: String,
             required: true
         },
-        suppliers: [{
+    suppliers: [{
             type: Schema.Types.ObjectId,
             ref: 'Supplier'
          }]
