@@ -1,36 +1,42 @@
-import { model, Schema} from 'mongoose';
+import mongoose from 'mongoose';
 
-const medicineSchema = new Schema({
+const medicineSchema = new mongoose.Schema({
     name: { 
         type: String, 
         required: true
        },
     batchNo: {
          type: String,
-          required: true 
+          required: false 
         },
     manufactDate:{
            type: String,
-            required: true
+            required: false
         },
     expiredDate: { 
             type:String, 
-            required: true
+            required: false
         },
     quantityInStock: { 
             type: Number, 
-            required: true 
+            required:false 
         },
-    measure:{
+    unitOfMeasure:{
             type: String,
-            required: true
+            required: false,
+            enum:{
+                values:['Kilogram','Gram','Litre','Millilitre','Piece','Box','Pallet','Dozen','Unit'],
+                message:"{VALUES}is not valid measurement"
+         }
         },
-    suppliers: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Supplier'
+        supply: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Supplier',
+            required: false
          }]
+
    });
    
-   const medicine_model = model('Medicine', medicineSchema);
+   const medicine_model = mongoose.model('Medicine', medicineSchema);
 
 export default medicine_model;

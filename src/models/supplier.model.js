@@ -1,6 +1,6 @@
-import {model, Schema} from 'mongoose';
+import mongoose from 'mongoose';
 
-const supplierSchema = new Schema({
+const supplierSchema = new mongoose.Schema({
  name: {
     type: String,
     required: true
@@ -15,5 +15,5 @@ const supplierSchema = new Schema({
  }
 });
 
-const supplier_model= model('Supplier', supplierSchema);
+const supplier_model= mongoose.model('Supplier', supplierSchema);
 export default supplier_model;
