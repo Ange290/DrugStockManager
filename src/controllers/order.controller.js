@@ -1,16 +1,19 @@
 
 import Order from '../models/order.model.js';
-import Supplier from '../models/supplier.model.js'; // Assuming your supplier model path
+import Supplier from '../models/supplier.model.js';
+import {NotFoundError, BadRequestError} from '../errors/index.js';
+import { validationResult } from 'express-validator';
+import asyncWrapper from '../middlewares/async.js';
 
-export const createOrder = async (req, res, next) => {
-  try {
+export const createOrder = asyncWrapper( async (req, res, next) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()){
+next( new BadRequestError(errors.array()[0].msg));
+  }
     const { medicine, supplier, status } = req.body;
-
-    // Validate supplier existence
-    
-    const suppliers = await Supplier.findById(supplier);
+const suppliers = await Supplier.findById(supplier);
     if (!suppliers) {
-      return res.status(400).json({ message: "Supplier with the provided ID not found" });
+      return next( new NotFoundError("Supplier with the provided ID not found" ));
     }
 
     // Create a new order
@@ -21,50 +24,44 @@ export const createOrder = async (req, res, next) => {
       message: 'Order created successfully',
       data: savedOrder
     });
-  } catch (error) {
-    next(error); // Pass the error to the error handler middleware
-  }
-};
+ 
+});
 
-export const getOrders = async (req, res, next) => {
-  try {
+export const getOrders = asyncWrapper( async (req, res, next) => {
+  
     const orders = await Order.find().populate('supplier'); // Populate the supplier details
     res.status(200).json({
       message: 'Orders retrieved successfully',
       data: orders
     });
-  } catch (error) {
-    next(error); // Pass the error to the error handler middleware
-  }
-};
 
-export const getOrderById = async (req, res, next) => {
-  try {
+});
+
+export const getOrderById = asyncWrapper( async (req, res, next) => {
+ 
     const orderId = req.params.id;
     const order = await Order.findById(orderId).populate('supplier'); // Populate the supplier details
 
     if (!order) {
-      return res.status(404).json({ message: "Order with the provided ID not found" });
+      return next(new NotFoundError( "Order with the provided ID not found"));
     }
 
     res.status(200).json({
       message: 'Order retrieved successfully',
       data: order
     });
-  } catch (error) {
-    next(error); // Pass the error to the error handler middleware
-  }
-};
 
-export const updateOrder = async (req, res, next) => {
-  try {
+});
+
+export const updateOrder =  asyncWrapper(async (req, res, next) => {
+ 
     const orderId = req.params.id;
     const { medicine, supplierId, status } = req.body;
 
     // Validate supplier existence (optional, depending on your logic)
     const supplier = await Supplier.findById(supplierId);
     if (!supplier && supplierId) { // Check only if supplierId is provided
-      return res.status(400).json({ message: "Supplier with the provided ID not found" });
+      return next(new NotFoundError( "Supplier with the provided ID not found" ));
     }
 
     const updatedOrder = await Order.findByIdAndUpdate(
@@ -74,32 +71,28 @@ export const updateOrder = async (req, res, next) => {
     );
 
     if (!updatedOrder) {
-      return res.status(404).json({ message: "Order with the provided ID not found" });
+      return next(new NotFoundError("Order with the provided ID not found" ));
     }
 
     res.status(200).json({
       message: 'Order updated successfully',
       data: updatedOrder
     });
-  } catch (error) {
-    next(error); // Pass the error to the error handler middleware
-  }
-};
+  
+});
 
-export const deleteOrder = async (req, res, next) => {
-  try {
+export const deleteOrder = asyncWrapper( async (req, res, next) => {
+ 
     const orderId = req.params.id;
     const deletedOrder = await Order.findByIdAndDelete(orderId);
 
     if (!deletedOrder) {
-      return res.status(404).json({ message: "Order with the provided ID not found" });
+      return next(new NotFoundError("Order with the provided ID not found" ));
     }
 
     res.status(200).json({
       message: 'Order deleted successfully',
       data: deletedOrder
     });
-  } catch (error) {
-    next(error); // Pass the error to the error handler middleware
-  }
-};
+ 
+});

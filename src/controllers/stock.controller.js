@@ -1,8 +1,14 @@
 import mongoose from "mongoose";
 import stock_model from "../models/stock.model.js";
+import { validationResult } from "express-validator";
+import {NotFoundError, BadRequestError} from '../errors/index.js';
+import asyncWrapper from "../middlewares/async.js";
 
-export const updateStock = async (req, res, next) => {
-  try {
+export const updateStock = asyncWrapper( async (req, res, next) => {
+ const errors = validationResult(req);
+ if(!errors.isEmpty()){
+   return next(new BadRequestError(errors.array()[0].msg));
+ }
     const { medicine, quantityInStock, unitOfMeasure } = req.body;
 
     // Set supplyDate to the current date if not provided in the request body
@@ -33,37 +39,35 @@ export const updateStock = async (req, res, next) => {
         data: newStock
       });
     }
-  } catch (error) {
-    next(error); // Pass the error to the error handler middleware
-  }
-};
-export const allStock= async(req,res,next) => {
-    try {
+  
+});
+export const allStock=  asyncWrapper(async(req,res,next) => {
+   
         const allStocks = await stock_model.find({});
+        if(allStocks){
         res.status(200).json({success:true, data:allStocks});
-    } catch (error) {
-        next(error);
-    }
-}
+        }
+});
 
-export const deleteStock = async(req, res,next) => {
-    try {
+export const deleteStock =  asyncWrapper(async(req, res,next) => {
+    
         const deleteStoxk = await stock_model.findByIdAndDelete(req.params.id);
+        if (!deleteStoxk) {
+            return next (new NotFoundError("Stock not found"))
+        }
         res.status(200).json({success:true, message: "Stock Deleted successfully"});
-    } catch (error) {
-        next(error);
-    }
-}
+   
+});
 
-export const getStockById = async (req, res) => {
-  try {
+export const getStockById =  asyncWrapper(async (req, res) => {
+ 
      const stock = await stock_model.findById(req.params.id);
      if (!stock) {
-       res.status(404).json({success:false, message:"Stock not found"})}
+       return next(new NotFoundError("Stock not found"))
+      }
        else{
         res.status(200).json({success:true, data:stock})
        }
-  } catch (error) {
-    next(error);
-  }
-};
+ 
+  });
+
