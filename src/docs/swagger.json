@@ -1,0 +1,721 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "DrugStock Management",
+      "description": "API documentation for DrugStock Management",
+      "version": "1.0.0"
+    },
+    "host": "localhost:5001",
+    "basePath": "",
+    "schemes": ["http", "https"],
+    "paths": {
+      "/api/medicine/add": {
+        "post": {
+          "summary": "Create a new Medicine",
+          "description": "Create a new Medicine",
+          "tags": ["Medicines"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/definitions/Medicine"
+              },
+              "required": true,
+              "description": "Medicine object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Medicine created"
+            }
+          }
+        }
+      },
+      "/api/supplier/add": {
+        "post": {
+          "summary": "Create a new Supplier",
+          "description": "Create a new Supplier",
+          "tags": ["Supplier"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/def/Supplier"
+              },
+              "required": true,
+              "description": "Supplier object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Supplier created"
+            }
+          }
+        }
+      },
+      "/api/order/add": {
+        "post": {
+          "summary": "Create a new Order",
+          "description": "Create a new Order",
+          "tags": ["Order"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/defy/Order"
+              },
+              "required": true,
+              "description": "Order object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Order created"
+            }
+          }
+        }
+      },
+     
+
+      "/api/medicine/update/{id}": {
+        "patch": {
+          "summary": "Update a Medicine by ID",
+          "description": "Update a Medicine by ID",
+          "tags": ["Medicines"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the medicine to update",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/components/definitions/Medicine"
+              },
+              "required": true,
+              "description": "Updated medicine object"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Medicine updated"
+            },
+            "404": {
+              "description": "Medicine not found"
+            }
+          }
+        }},
+        "/api/stock/update/{medicine}": {
+            "patch": {
+              "summary": "Update or Add in Stock by ID",
+              "description": "Update a Stock by ID",
+              "tags": ["Stocks"],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of the stock to update",
+                  "required": true,
+                  "type": "string"
+                },
+                {
+                  "in": "body",
+                  "name": "body",
+                  "schema": {
+                    "$ref": "#/components/define/Stock"
+                  },
+                  "required": true,
+                  "description": "Updated stock object"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Stock updated"
+                },
+                "404": {
+                  "description": "Stock not found"
+                }
+              }
+            }},
+            "/api/supplier/update/{id}": {
+                "patch": {
+                  "summary": "Update Supplier by ID",
+                  "description": "Update a Supplier by ID",
+                  "tags": ["Supplier"],
+                  "parameters": [
+                    {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of the supplier to update",
+                      "required": true,
+                      "type": "string"
+                    },
+                    {
+                      "in": "body",
+                      "name": "body",
+                      "schema": {
+                        "$ref": "#/def/Supplier"
+                      },
+                      "required": true,
+                      "description": "Updated supplier object"
+                    }
+                  ],
+                  "responses": {
+                    "200": {
+                      "description": "Supplier updated"
+                    },
+                    "404": {
+                      "description": "Supplier not found"
+                    }
+                  }
+                }},
+                "/api/order/update/{id}": {
+                  "patch": {
+                    "summary": "Update Order by ID",
+                    "description": "Update a Order by ID",
+                    "tags": ["Order"],
+                    "parameters": [
+                      {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the order to update",
+                        "required": true,
+                        "type": "string"
+                      },
+                      {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                          "$ref": "#/defy/Order"
+                        },
+                        "required": true,
+                        "description": "Updated Order object"
+                      }
+                    ],
+                    "responses": {
+                      "200": {
+                        "description": "Order updated"
+                      },
+                      "404": {
+                        "description": "Order not found"
+                      }
+                    }
+                  }},
+                  "/api/sale/update/{medicine}": {
+                    "patch": {
+                      "summary": "Update Sale by ID",
+                      "description": "Update a Sale by ID",
+                      "tags": ["Sale"],
+                      "parameters": [
+                        {
+                          "name": "id",
+                          "in": "path",
+                          "description": "ID of the sale to update",
+                          "required": true,
+                          "type": "string"
+                        },
+                        {
+                          "in": "body",
+                          "name": "body",
+                          "schema": {
+                            "$ref": "#/defyn/Sale"
+                          },
+                          "required": true,
+                          "description": "Updated Sale object"
+                        }
+                      ],
+                      "responses": {
+                        "200": {
+                          "description": "Sale updated"
+                        },
+                        "404": {
+                          "description": "Sale not found"
+                        }
+                      }
+                    }},
+
+        "/api/medicine/delete/{id}":{
+        "delete": {
+          "summary": "Delete a medicine by ID",
+          "description": "Delete a medicine by ID",
+          "tags": ["Medicines"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the medicine to delete",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Medicine deleted"
+            },
+            "404": {
+              "description": "Medicine not found"
+            }
+          }
+        }},
+        "/api/stock/delete/{id}":{
+            "delete": {
+              "summary": "Delete a stock by ID",
+              "description": "Delete a stock by ID",
+              "tags": ["Stocks"],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of the stock to delete",
+                  "required": true,
+                  "type": "string"
+                }
+              
+              ],
+              "responses": {
+                "204": {
+                  "description": "Stock deleted"
+                },
+                "404": {
+                  "description": "Stock not found"
+                }
+              }
+            }},
+            "/api/supplier/delete/{id}":{
+                "delete": {
+                  "summary": "Delete a supplier by ID",
+                  "description": "Delete a supplier by ID",
+                  "tags": ["Supplier"],
+                  "parameters": [
+                    {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of the supplier to delete",
+                      "required": true,
+                      "type": "string"
+                    }
+                   
+                  ],
+                  "responses": {
+                    "204": {
+                      "description": "Supplier deleted"
+                    },
+                    "404": {
+                      "description": "Supplier not found"
+                    }
+                  }
+                }},
+                "/api/order/delete/{id}":{
+                  "delete": {
+                    "summary": "Delete a order by ID",
+                    "description": "Delete a order by ID",
+                    "tags": ["Order"],
+                    "parameters": [
+                      {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the order to delete",
+                        "required": true,
+                        "type": "string"
+                      }
+                     
+                    ],
+                    "responses": {
+                      "204": {
+                        "description": "Order deleted"
+                      },
+                      "404": {
+                        "description": "Order not found"
+                      }
+                    }
+                  }},
+                  "/api/sale/delete/{id}":{
+                    "delete": {
+                      "summary": "Delete a sale by ID",
+                      "description": "Delete a sale by ID",
+                      "tags": ["Sale"],
+                      "parameters": [
+                        {
+                          "name": "id",
+                          "in": "path",
+                          "description": "ID of the sale to delete",
+                          "required": true,
+                          "type": "string"
+                        }
+                       
+                      ],
+                      "responses": {
+                        "204": {
+                          "description": "Sale deleted"
+                        },
+                        "404": {
+                          "description": "Sale not found"
+                        }
+                      }
+                    }},
+
+        "/api/medicine/get/{id}":{
+        "get": {
+          "summary": "Get a Medicine by ID",
+          "description": "Get a medicine by ID",
+          "tags": ["Medicines"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the medicine to retrieve",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response"
+            },
+            "404": {
+              "description": "Medicine not found"
+            }
+          }
+        }},
+        "/api/stock/get/{id}":{
+            "get": {
+              "summary": "Get a Stock by ID",
+              "description": "Get a stock by ID",
+              "tags": ["Stocks"],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of the stock to retrieve",
+                  "required": true,
+                  "type": "string"
+                },
+                {
+                    "in": "body",
+                    "name": "body",
+                    "schema": {
+                      "$ref": "#/components/define/Stock"
+                    },
+                    "required": true,
+                    "description": "get by id stock object"
+                  }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Successful response"
+                },
+                "404": {
+                  "description": "Stock not found"
+                }
+              }
+            }},
+            "/api/supplier/get/{id}":{
+                "get": {
+                  "summary": "Get a Supplier by ID",
+                  "description": "Get a supplierby ID",
+                  "tags": ["Supplier"],
+                  "parameters": [
+                    {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of the supplier to retrieve",
+                      "required": true,
+                      "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                          "$ref": "#/def/Supplier"
+                        },
+                        "required": true,
+                        "description": "get by id supplier object"
+                      }
+                  ],
+                  "responses": {
+                    "200": {
+                      "description": "Successful response"
+                    },
+                    "404": {
+                      "description": "Supplier not found"
+                    }
+                  }
+                }}, 
+                "/api/order/get/{id}":{
+                  "get": {
+                    "summary": "Get a Order by ID",
+                    "description": "Get a Order by ID",
+                    "tags": ["Order"],
+                    "parameters": [
+                      {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the order to retrieve",
+                        "required": true,
+                        "type": "string"
+                      },
+                      {
+                          "in": "body",
+                          "name": "body",
+                          "schema": {
+                            "$ref": "#/defy/Order"
+                          },
+                          "required": true,
+                          "description": "get by id order object"
+                        }
+                    ],
+                    "responses": {
+                      "200": {
+                        "description": "Successful response"
+                      },
+                      "404": {
+                        "description": "Order not found"
+                      }
+                    }
+                  }},  
+                  "/api/sale/get/{id}":{
+                    "get": {
+                      "summary": "Get a Sale by ID",
+                      "description": "Get a Sale by ID",
+                      "tags": ["Sale"],
+                      "parameters": [
+                        {
+                          "name": "id",
+                          "in": "path",
+                          "description": "ID of the sale to retrieve",
+                          "required": true,
+                          "type": "string"
+                        },
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "schema": {
+                              "$ref": "#/defyn/Sale"
+                            },
+                            "required": true,
+                            "description": "get by id sale object"
+                          }
+                      ],
+                      "responses": {
+                        "200": {
+                          "description": "Successful response"
+                        },
+                        "404": {
+                          "description": "Sale not found"
+                        }
+                      }
+                    }},                    
+
+        "/api/medicine/list":{
+            "get": {
+              "summary": "Get all Medicines ",
+              "description": "Get all Medicines",
+              "tags": ["Medicines"],
+              "responses": {
+                "200": {
+                  "description": "Successful response"
+                },
+                "404": {
+                  "description": "Medicine not found"
+                }
+              }
+            }
+      
+    },
+   
+    "/api/stock/list":{
+        "get": {
+          "summary": "Get all Stocks ",
+          "description": "Get all Stocks",
+          "tags": ["Stocks"],
+          "responses": {
+            "200": {
+              "description": "Successful response"
+            },
+            "404": {
+              "description": "Stock not found"
+            }
+          }
+        }
+  
+},
+"/api/supplier/list":{
+    "get": {
+      "summary": "Get all Supplier ",
+      "description": "Get all Supplier",
+      "tags": ["Supplier"],
+      "responses": {
+        "200": {
+          "description": "Successful response"
+        },
+        "404": {
+          "description": "Supplier not found"
+        }
+      }
+    }
+
+},
+"/api/order/list":{
+  "get": {
+    "summary": "Get all Orders ",
+    "description": "Get all Orders",
+    "tags": ["Order"],
+    "responses": {
+      "200": {
+        "description": "Successful response"
+      },
+      "404": {
+        "description": "Order not found"
+      }
+    }
+  }
+
+},
+"/api/sale/list":{
+  "get": {
+    "summary": "Get all Sales ",
+    "description": "Get all Sales",
+    "tags": ["Sale"],
+    "responses": {
+      "200": {
+        "description": "Successful response"
+      },
+      "404": {
+        "description": "Sale not found"
+      }
+    }
+  }
+
+}
+},
+    "definitions": {
+      "Medicine": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "batchNo": {
+            "type": "string"
+          },
+          "manufactDate": {
+            "type": "string"
+          },
+          "expiredDate": {
+            "type": "string"
+          },
+          "qantityInStock": {
+            "type": "string"
+          },
+          "unitOfMeasure": {
+            "type": "string",
+            "enum": ["Kilogram","Gram","Litre","Millilitre","Piece","Box","Pallet","Dozen","Unit"]
+            
+          },
+           "supply": [{
+            "type": "mongoose.Schema.Types.ObjectId",
+            "ref": "Supplier"
+          }]
+        },
+        "required": ["name"]
+      }
+    },
+    "define": {
+        "Stock": {
+          "type": "object",
+          "properties": {
+            "medicine": {
+              "type": "string"
+            },
+            "supplyDate": {
+              "type": "string"
+            },
+            "quantityInStock": {
+              "type": "Number"
+            },
+            "unitOfMeasure": {
+              "type": "string",
+              "enum": ["Kilogram","Gram","Litre","Millilitre","Piece","Box","Pallet","Dozen","Unit"]
+              
+            }
+          }
+        }
+      },
+      "def":{
+        "Supplier":{
+            "type":"object",
+            "properties":{
+                "name":{
+              "type":"string"
+                },
+                "contact":{
+                    "type":"string"
+                },
+                "address":{
+                    "type":"string"
+                }
+            }
+        }
+      },
+      "defy":{
+        "Order":{
+          "type":"object",
+          "properties":{
+            "name":{
+              "type":"string"
+            },
+            "description":{
+              "type":"string"
+            },
+            "quantity":{
+              "type":"integer"
+            },
+            "unitOfMeasure":{
+              "type":"string",
+              "enum":["Kilogram","Gram","Litre","Millilitre","Piece","Box","Pallet","Dozen","Unit"]
+            },
+            "supplier":{
+              "type":"mongoose.Schema.Types.ObjectId",
+              "ref":"Supplier"
+            },
+            "Date":{
+              "orderDate":{
+                "type":"string"
+              },
+              "deriveryDate":{
+                "type":"string"
+              }
+            }
+          }
+        }
+      },
+      "defyn":{
+        "Sale":{
+          "type":"object",
+          "properties":{
+"medicine":{
+  "type":"string"
+},
+"OutflowDate":{
+"type":"Date"
+},
+"quantityInStock":{
+  "type":"Number"
+},
+"unitOfMeasure":{
+  "type":"string",
+  "enum":["Kilogram","Gram","Litre","Millilitre","Piece","Box","Pallet","Dozen","Unit"]
+}
+          
+        }
+      }
+      }
+  }
+  

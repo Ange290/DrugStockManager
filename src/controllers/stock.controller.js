@@ -46,11 +46,24 @@ export const allStock= async(req,res,next) => {
     }
 }
 
-export const deleteMedicine = async(req, res,next) => {
+export const deleteStock = async(req, res,next) => {
     try {
-        const deleteMedic = await medicine_model.findByIdAndDelete(req.params.id);
-        res.status(200).json({success:true, message: "Medicine Deleted successfully"});
+        const deleteStoxk = await stock_model.findByIdAndDelete(req.params.id);
+        res.status(200).json({success:true, message: "Stock Deleted successfully"});
     } catch (error) {
         next(error);
     }
 }
+
+export const getStockById = async (req, res) => {
+  try {
+     const stock = await stock_model.findById(req.params.id);
+     if (!stock) {
+       res.status(404).json({success:false, message:"Stock not found"})}
+       else{
+        res.status(200).json({success:true, data:stock})
+       }
+  } catch (error) {
+    next(error);
+  }
+};

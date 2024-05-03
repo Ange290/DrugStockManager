@@ -36,7 +36,7 @@ export const getSupplierById = async (req, res, next) => {
 export const updateSupplier = async (req, res, next) => {
     try {
         const updatedSupplier = await supplier_model.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (updatedSupplier) {
+        if (!updatedSupplier) {
             res.status(404).json({success:false, message:"Supply not found"})}
             else {
             res.status(200).json({success: true, data: updatedSupplier, message:"Supplier updated successfully"});
@@ -49,7 +49,7 @@ export const updateSupplier = async (req, res, next) => {
 export const deleteSupplier = async (req, res, next) => {
     try {
         const deletedSupplier = await supplier_model.findByIdAndDelete(req.params.id);
-        if (deletedSupplier) {
+        if (!deletedSupplier) {
             res.status(404).json({success:false, message:"Supply not found"})}
             else {
             res.status(200).json({success: true, message:"Supplier deleted successfully"});

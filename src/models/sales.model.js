@@ -1,34 +1,32 @@
 import mongoose from'mongoose' ;
 
 const OutflowSchema = new mongoose.Schema({
-    medicines: [{
-        medicineId:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Medicine'
-    },
-    name:{
+
+   
+     medicine:{
         type: String,
-        required: true
-    }
-    }],
-    quantity: [{
+        required: false
+    },
+    OutflowDate: {
+        type: Date,
+        required: false
+    },
+    quantityInStock: {
         type: Number,
-        required: true
-    }],
+        required: false
+    },
     unitOfMeasure:{
         type: String,
-        required: true,
+        required: false,
         enum:{
             values:['Kilogram','Gram','Litre','Millilitre','Piece','Box','Pallet','Dozen','Unit'],
             message:"{VALUES}is not valid measurement"
      }
-    },
-    OutflowDate: {
-        type: Date,
-        required: true
-    },
+    }
+
+ 
     
-}, { timestamps: true });
+});
 
 const Outflow = mongoose.model('Sales', OutflowSchema);
 

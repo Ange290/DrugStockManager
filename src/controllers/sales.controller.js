@@ -2,44 +2,52 @@ import mongoose from 'mongoose';
 import Outflow from '../models/sales.model.js';
 import stock_model from '../models/stock.model.js'; // Assuming your Stock model path
 
+
 export const createOutflow = async (req, res, next) => {
-  try {
-    const { medicines, quantity, unitOfMeasure, OutflowDate } = req.body;
+    try {
+        const { medicine, quantityInStock, unitOfMeasure, OutflowDate } = req.body;
 
-    // Validate outflow data (optional)
+        // Find stock record by medicine name
+        let existingStock = await stock_model.findOne({ medicine });
 
-    const outflowItems = [];
-    for (let i = 0; i < medicines.length; i++) {
-      const medicineId = medicines[i].medicineId;
-      const outflowQuantity = quantity[i];
+        if (!existingStock) {
+            // If the stock record doesn't exist, return an error
+            return res.status(404).json({ message: 'Stock not found' });
+        }
 
-      // Check if medicine exists in stock
-      const existingStock = await stock_model.findOne({ medicine: medicineId });
-      if (!existingStock) {
-        return res.status(400).json({ message: `Medicine with ID ${medicineId} not found in stock` });
-      }
+        // Reduce the quantity of the existing stock
+        existingStock.quantityInStock -= quantityInStock;
+        await existingStock.save();
 
-      // Validate sufficient stock quantity
-      if (existingStock.quantityInStock < outflowQuantity) {
-        return res.status(400).json({ message: `Insufficient stock for medicine with ID ${medicineId}` });
-      }
+        // Create a new Outflow record
+        const newOutflow = new Outflow({ medicine, quantityInStock, unitOfMeasure, OutflowDate });
+        const savedOutflow = await newOutflow.save();
 
-      // Update stock quantity
-      existingStock.quantityInStock -= outflowQuantity;
-      await existingStock.save();
-
-      outflowItems.push({ medicineId, quantity: outflowQuantity, unitOfMeasure });
+        res.status(201).json({
+            message: 'Outflow (sale) created successfully',
+            data: savedOutflow
+        });
+    } catch (error) {
+        next(error); // Pass the error to the error handler middleware
     }
+       }      
 
-    // Create a new outflow record
-    const newOutflow = new Outflow({ medicines: outflowItems, OutflowDate });
-    const savedOutflow = await newOutflow.save();
+       export const listSale = async(req,res,next) =>{
+        try {
+            const allSale = await Outflow.find({});
+            res.status(200).json({success:true, data:allSale});
+        } catch (error) {
+            next(error);
+        }
+       }
 
-    res.status(201).json({
-      message: 'Outflow (sale) created successfully',
-      data: savedOutflow
-    });
-  } catch (error) {
-    next(error); // Pass the error to the error handler middleware
-  }
-};
+       export const deleteSale = async(req, res,next) => {
+        try {
+            const deleteSale = await Outflow.findByIdAndDelete(req.params.id);
+            res.status(200).json({success:true, message: "Sale Deleted successfully"});
+        } catch (error) {
+            next(error);
+        }
+       }
+
+      
