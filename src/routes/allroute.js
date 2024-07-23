@@ -4,6 +4,9 @@ import medicine_route from "./medicine.route.js";
 import order_route from "./order.route.js";
 import sale_route from "./sale.route.js";
 import express from "express";
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 const router = express.Router();
 router.use('/stock',stock_route);

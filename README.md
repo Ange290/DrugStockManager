@@ -1,2 +1,2 @@
-# Farmer Management App
-Farmer Management App
+# DrugStock Management
+DrugStock Management
